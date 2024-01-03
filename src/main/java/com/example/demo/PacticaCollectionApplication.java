@@ -7,9 +7,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-//@EnableJpaRepositories(basePackages = "com.example.demo.repository")
-//@EntityScan(basePackages = "com.example.demo.domains")
-//@ComponentScan
+@EnableJpaRepositories(basePackages = "com.example.demo.repository")
+@EntityScan(basePackages = "com.example.demo.domains")
 @SpringBootApplication
 @Configuration
 public class PacticaCollectionApplication {
