@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
 
     public void existsById(Long id) {
         if (!repository.existsById(id)) {
-
+            throw new RuntimeException("Error");
         }
     }
 }
