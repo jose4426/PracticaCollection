@@ -7,12 +7,13 @@ import org.mapstruct.Mapper;
 
 
 @Mapper(componentModel = "spring",
-uses = {
+        uses = {
 
-})
+        })
 public interface UserMapper {
     UserResponse entityToResponse(User user);
+
     User requestToEntity(UserRequest request);
 
-   // UserResponse entityToResponses(List<User> all);
+    // UserResponse entityToResponses(List<User> all);
 }
