@@ -5,10 +5,12 @@ import com.example.demo.dto.UserRequest;
 import com.example.demo.dto.UserResponse;
 import com.example.demo.mapper.UserMapper;
 import com.example.demo.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 
@@ -20,7 +22,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserResponse> findAll() {
-        List<User> users= repository.findAll();
+        List<User> users = repository.findAll();
 
         return users.stream()
                 .map(mapper::entityToResponse)
@@ -29,14 +31,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponse findById(Long id) {
-
-        return  mapper.entityToResponse(repository.findById(id).get());
+        existsById(id);
+        return mapper.entityToResponse(repository.findById(id).get());
     }
 
     @Override
+    @Transactional
     public UserResponse save(UserRequest request) {
-        return mapper.entityToResponse(repository.save( mapper.requestToEntity(request)));
+        if (Objects.nonNull(request)) {
+            User user = repository.save(mapper.requestToEntity(request));
 
+            return mapper.entityToResponse(user);
+
+        }
+        return null;
     }
 
     @Override
@@ -46,6 +54,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponse update(UserRequest request) {
+        if (request.getId() != null) {
+            return save(request);
+        }
         return null;
     }
 

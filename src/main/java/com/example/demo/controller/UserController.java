@@ -22,21 +22,29 @@ public class UserController {
         return response;
     }
 
-    @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<UserResponse> findAll() {
         List<UserResponse> response = service.findAll();
         return response;
     }
+
     @DeleteMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public void deleteById(@PathVariable(value = "id") Long id) {
-         service.delete(id);
+        service.delete(id);
 
     }
 
     @PostMapping(value = "/save", consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public UserResponse add(@RequestBody UserRequest request)  {
+    public UserResponse add(@RequestBody UserRequest request) {
         UserResponse response = service.save(request);
+        return response;
+    }
+
+    @PatchMapping(value = "/update", consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public UserResponse update(@RequestBody UserRequest request) {
+        UserResponse response = service.update(request);
         return response;
     }
 

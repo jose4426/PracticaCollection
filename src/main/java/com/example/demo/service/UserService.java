@@ -11,11 +11,14 @@ import java.util.List;
 public interface UserService {
 
     List<UserResponse> findAll();
-    UserResponse findById(Long id);
-    UserResponse save(UserRequest request);
-    void delete(Long id);
-    UserResponse update(UserRequest request);
 
+    UserResponse findById(Long id);
+
+    UserResponse save(UserRequest request);
+
+    void delete(Long id);
+
+    UserResponse update(UserRequest request);
 
 
 }
