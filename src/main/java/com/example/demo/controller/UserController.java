@@ -47,4 +47,13 @@ public class UserController {
         return response;
     }
 
+    @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<UserResponse> search(
+            @RequestParam (required = false) String name,
+            @RequestParam (required = false)  Long age,
+            @RequestParam (required = false) String email) {
+        List<UserResponse> response = service.search(name, age, email);
+        return response;
+    }
+
 }

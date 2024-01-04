@@ -20,5 +20,7 @@ public interface UserService {
 
     UserResponse update(UserRequest request);
 
+    List<UserResponse> search(String name, Long age, String email);
+
 
 }

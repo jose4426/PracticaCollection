@@ -7,11 +7,11 @@ import com.example.demo.mapper.UserMapper;
 import com.example.demo.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 
 @Component
@@ -24,9 +24,11 @@ public class UserServiceImpl implements UserService {
     public List<UserResponse> findAll() {
         List<User> users = repository.findAll();
 
-        return users.stream()
+        List<UserResponse> responses = mapper.entityToResponseList(users);
+        /*return users.stream()
                 .map(mapper::entityToResponse)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList());*/
+        return responses;
     }
 
     @Override
@@ -60,9 +62,30 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
+    @Override
+    public List<UserResponse>search(String name, Long age, String email) {
+        Specification<User> spec = Specification.where(null);
+
+        if (name != null && !name.isEmpty()) {
+            spec = spec.and(UserSpecifications.nameLike(name));
+        }
+
+        if (age != null) {
+            spec = spec.and(UserSpecifications.ageEqual(age));
+        }
+
+        if (email != null && email.isEmpty()) {
+            spec = spec.and(UserSpecifications.emailEqual(email));
+        }
+        return  mapper.entityToResponseList(repository.findAll(spec));
+    }
+
     public void existsById(Long id) {
         if (!repository.existsById(id)) {
             throw new RuntimeException("Error");
         }
     }
+
+
+
 }
