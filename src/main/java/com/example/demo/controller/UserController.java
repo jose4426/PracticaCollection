@@ -12,6 +12,8 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/user")
+@CrossOrigin(origins = "http://localhost:8080")  // Permitir solicitudes desde el frontend
+
 public class UserController {
     private final UserService service;
 
